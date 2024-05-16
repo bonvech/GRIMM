@@ -1,0 +1,26 @@
+2024-05-16 01:44:04.646448:  Serv (192.168.1.82): Файл "D:\AerosolComplex\YandexDisk\ИКМО org.msu\_Instruments\_Grimm5416\_Today\2024-05-15.txt" не менялся 4 часов (264 минут)
+2024-05-16 01:44:04.744748:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 01:44:46.913139:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 01:46:01.842946:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 01:55:37.643915:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 02:07:02.878625:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 03:07:02.970646:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 04:07:02.908567:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 05:07:02.931841:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 06:07:02.811678:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 07:07:02.787268:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 08:07:02.829248:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 09:07:02.829874:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 10:07:02.854702:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 11:07:02.978158:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 12:07:02.787710:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 13:07:02.841013:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 14:07:02.516369:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 15:07:02.933099:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 16:07:02.855452:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 17:07:03.010488:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 18:07:02.942672:  Serv (192.168.1.82): GRIMM: Warning 8. Low pressure.
+2024-05-16 23:07:02.963039:  Serv (192.168.1.82): Файл "D:\AerosolComplex\YandexDisk\ИКМО org.msu\_Instruments\_Grimm5416\_Today\2024-05-15 w o DMA.txt" не менялся 4 часов (262 минут)
+2024-05-16 23:07:03.100990:  Serv (192.168.1.82): Нет новых данных. Последняя запись в файле 4 часов (262 минут) назад
+2024-05-16 23:28:08.321906:  Serv (192.168.1.82): Файл "D:\AerosolComplex\YandexDisk\ИКМО org.msu\_Instruments\_Grimm5416\_Today\2024-05-15 w o DMA.txt" не менялся 5 часов (283 минут)
+2024-05-16 23:28:08.433637:  Serv (192.168.1.82): GRIMM: Нет новых данных. Последняя запись в файле 5 часов (283 минут) назад
