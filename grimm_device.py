@@ -223,7 +223,7 @@ def plot_figure(data, period='day'):
 ############################################################################
 ############################################################################
 if __name__ == "__main__":
-    #try:
+    try:
         grimm = Grimm()
         if grimm.check_lastfile():
             exit("Errors with last file")
@@ -231,5 +231,5 @@ if __name__ == "__main__":
             exit("Errors in file format or in last record")
         grimm.read_errors_and_wars()
         plot_figure(grimm.data, period='day')
-    #except Exception as error:
-        #grimm.write_to_bot(f"{error}")
+    except Exception as error:
+        grimm.write_to_bot(f"{error}")
