@@ -18,6 +18,7 @@ class Grimm(Supervisor):
     def __init__(self):
         super().__init__("grimm")
         path_to_figures = ".\\figures\\"
+        self.alarm_time = 60
 
 
     ## ----------------------------------------------------------------
@@ -39,15 +40,15 @@ class Grimm(Supervisor):
         #print(last_record)
 
         now = time.time() ## текущее время
-        delta = (now - last_date) // 60 ## sec
+        delta = int(now - last_date) // 60 ## sec -> minuts
         #print(last_record["Time End"], now, last_date)
         #print(delta)
 
         ## если время больше чем час - сообщение
-        if delta > 60: # 60 min
-            text  = f"{self.device_name.upper()}: Нет новых данных. Последняя запись в файле {delta / 60:.0f}"
-            text += f" час{self.get_ending(delta // 60)} "
-            text += f"({delta:.0f} минут) " * (delta < 60) 
+        if delta > self.alarm_time: # 60 min
+            text  = f"{self.device_name.upper()}: Нет новых данных. Последняя запись в файле"
+            text += f" {delta // 60} час{self.get_ending(delta // 60)} "
+            text += f"({delta} минут) " * (delta < 60) 
             text += "назад."
             self.print_info(text)
             return 1

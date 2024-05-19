@@ -184,11 +184,11 @@ class Supervisor:
 
         ## если файл не менялся 2 часа - ошибка в телебот
         now = time.time() ## текущее время
-        delta = (now - os.path.getmtime(last_file)) // 60 ## minutes
+        delta = int(now - os.path.getmtime(last_file)) // 60 ## minutes
         if delta > self.alarm_time: # 60 min
-            text  = f"{self.device_name} Supervisor: Файл \"{last_file}\" не менялся {delta / 60:.0f}"
-            text += f" час{self.get_ending(delta // 60)} " 
-            text += f"({delta:.0f} минут)" * (delta < 60)
+            text  = f"{self.device_name.upper()} Supervisor: Файл \"{last_file}\" не менялся "
+            text += f"{delta // 60} час{self.get_ending(delta // 60)}" 
+            text += f" ({delta} минут)" * (delta < 60)
             ## послать предупреждение, что самый поздний файл очень старый
             self.print_info(text)
             #self.print_message(text)
