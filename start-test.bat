@@ -1,6 +1,6 @@
 echo
 d:
-cd  \AK\GRIMM\
+cd  D:\AK\GRIMM\
 
 python grimm_device.py 
 pause

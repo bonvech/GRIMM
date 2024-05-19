@@ -9,172 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from   matplotlib import dates
 
-
-class Supervisor:
-    def __init__(self, devicename):
-        self.bot_flag = True ## 
-        self.test_mode = False
-        self.telebot_config_token   = telebot_config.token
-        self.telebot_config_channel = telebot_config.channel
-        self.device_name = devicename
-        self.alarm_time  = 60 # 60 min
-
-        self.get_separator()
-        ## get local ip
-        self.get_local_ip()
-
-        ## прочитать конфиг, считать путь к данным
-        #self.datadirname = 'data/Съемка'
-        self.datadirname = "D:\\AerosolComplex\\YandexDisk\\ИКМО org.msu\\_Instruments\\_Grimm5416\\_Today"
-        self.logdirname  = ".\\log"
-        if not self.datadirname.endswith(self.sep): self.datadirname += self.sep
-        if not self.logdirname.endswith(self.sep):  self.logdirname  += self.sep
-
-
-    ## ----------------------------------------------------------------
-    ##  
-    ## ----------------------------------------------------------------
-    def get_local_ip(self):
-        self.hostname = socket.gethostname()
-        self.local_ip = socket.gethostbyname(self.hostname)
-        #return hostname, local_ip
-
-
-    ## ----------------------------------------------------------------
-    ##  Print message to bot or to logfile
-    ## ----------------------------------------------------------------
-    def print_info(self, text):
-        if self.bot_flag:
-            self.write_to_bot(text)
-        else:
-            self.print_message(text)
-
-
-    ## ----------------------------------------------------------------
-    ##  Print message to logfile
-    ## ----------------------------------------------------------------
-    def print_message(self, message, end=''):
-        ## print to screen
-        print(message)
-
-        ## write to logfile
-        if message[-1] != '\n' and end != '\n':
-            message += '\n'
-        #sep = self.get_separator()
-        #if not logdirname.endswith(sep):  logdirname += sep
-        logfilename = self.logdirname + "_".join(["_".join(str(datetime.now()).split('-')[:2]), 
-                                                 self.device_name,  'log.txt'])
-        with open(logfilename,'a') as flog:
-            flog.write(f"{datetime.now()}:  {message}{end}")
-
-
-    ## ----------------------------------------------------------------
-    ##  write message to bot
-    ## ----------------------------------------------------------------
-    def write_to_bot(self, text):
-        text = f"{self.hostname} ({self.local_ip}): {text}"
-        if not self.test_mode:
-            try:
-                bot = telebot.TeleBot(self.telebot_config_token, parse_mode=None)
-                bot.send_message(self.telebot_config_channel, text)
-                self.print_message(text)
-            except Exception as err:
-                ##  напечатать строку ошибки
-                text = f": ERROR in writing to bot: {err}"
-                self.print_message(text)  ## write to log file
-        else:
-            self.print_message(text)        
-
-
-    ## ----------------------------------------------------------------
-    ##  определить разделитель в полном пути в операционной системе 
-    ## ----------------------------------------------------------------
-    def get_separator(self):
-        self.sep = '/' if 'ix' in os.name else '\\' 
-
-
-    ## ----------------------------------------------------------------
-    ##  найти самый поздний файл
-    ## ----------------------------------------------------------------
-    def get_latest_file(self, extention):
-        ''' 
-        Функция ищет самый поздний файл
-        Возвращает его имя
-        '''
-        max_file = f"Error! No file found with extention {extention}"
-
-        dirname = self.datadirname
-        if not dirname.endswith(self.sep):  dirname = dirname + self.sep
-        if not os.path.isdir(dirname):
-            #self.print_info(f"Alarm!! Нет такой папки {dirname}! Валим отсюда!")
-            return f"Error! Нет такой папки {dirname}!" 
-
-        max_atime = 0
-        #print(os.listdir(dirname))
-        for filename in os.listdir(dirname):
-            ## проверить файл ли это
-            if not os.path.isfile(dirname + filename):
-                continue
-            if not filename.endswith(extention):
-                continue
-            if os.path.getmtime(dirname + filename) > max_atime:
-                max_atime = os.path.getmtime(dirname + filename)
-                max_file = dirname + filename
-        return max_file
-
-
-    ## ----------------------------------------------------------------
-    ##  найти и проверить самый поздний файл
-    ## ----------------------------------------------------------------
-    def check_file_data(self):
-        ## прочитать файл
-        try:
-            #data = pd.read_csv(last_file, sep="\t") ## Error 'utf-8' codec can't decode byte 0xb0 in position 1573: invalid start byte
-            #data = pd.read_csv(last_file, sep="\t", encoding = "ISO-8859-1") ## тоже работает
-            data = pd.read_csv(self.last_file, sep="\t", encoding = "latin")
-        except Exception as error:
-            self.print_info(f"Error in file reading: {error}")
-            return 2
-        #print(data.tail(20))
-
-        ## если в файле нет данных - ошибка в телебот
-        if data.shape[0] == 0:
-            self.print_info(f"No data in file {last_file}")
-            return 3
-
-        ## если одна колонка - 
-        if data.shape[1] == 1:
-            self.print_info(f"No columns in file {last_file}")
-            return 4
-        
-        self.data = data ## \todo оставить две недели
-        return 0
-
-
-    ## ----------------------------------------------------------------
-    ##  найти и проверить самый поздний файл
-    ## ----------------------------------------------------------------
-    def check_lastfile(self):
-        last_file = self.get_latest_file("txt")
-        self.last_file = last_file
-        #self.print_message(self.last_file)
-
-        ## если файла нет - ошибка в телебота
-        if "error" in last_file.lower():
-            self.print_info(last_file)
-            return 1
-
-        ## если файл не менялся 2 часа - ошибка в телебот
-        now = time.time() ## текущее время
-        delta = (now - os.path.getmtime(last_file)) // 60 ## minutes
-        if delta > self.alarm_time: # 60 min
-            text = f"Файл \"{last_file}\" не менялся {delta / 60:.0f} часов ({delta:.0f} минут)"
-            ## послать предупреждение, что самый поздний файл очень старый
-            self.print_info(text)
-            #self.print_message(text)
-
-        self.check_file_data()
-        return 0
+from   supervisor import *
 
 
 ############################################################################
@@ -188,7 +23,10 @@ class Grimm(Supervisor):
     ## ----------------------------------------------------------------
     ##  проверить время самой последней записи в файле
     ## ----------------------------------------------------------------
-    def check_last_record(self):        
+    def check_last_record(self): 
+        ##  прочитать и проверить данные в файле
+        self.check_file_data()
+        
         ## сравнить время последнего измерения с текущим 
         if "Time End" not in self.data.columns:
             self.print_info("Ошибка при чтении формата данных")
@@ -207,7 +45,11 @@ class Grimm(Supervisor):
 
         ## если время больше чем час - сообщение
         if delta > 60: # 60 min
-            self.print_info(f"{self.device_name.upper()}: Нет новых данных. Последняя запись в файле {delta / 60:.0f} часов ({delta:.0f} минут) назад")
+            text  = f"{self.device_name.upper()}: Нет новых данных. Последняя запись в файле {delta / 60:.0f}"
+            text += f" час{self.get_ending(delta // 60)} "
+            text += f"({delta:.0f} минут) " * (delta < 60) 
+            text += "назад."
+            self.print_info(text)
             return 1
         return 0
 
@@ -381,7 +223,7 @@ def plot_figure(data, period='day'):
 ############################################################################
 ############################################################################
 if __name__ == "__main__":
-    try:
+    #try:
         grimm = Grimm()
         if grimm.check_lastfile():
             exit("Errors with last file")
@@ -389,5 +231,5 @@ if __name__ == "__main__":
             exit("Errors in file format or in last record")
         grimm.read_errors_and_wars()
         plot_figure(grimm.data, period='day')
-    except Exception as error:
-        grimm.write_to_bot(f"{error}")
+    #except Exception as error:
+        #grimm.write_to_bot(f"{error}")
