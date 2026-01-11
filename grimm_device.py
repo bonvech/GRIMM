@@ -1,14 +1,14 @@
 import os, time
-from datetime import datetime
 import pandas as pd
 import socket
-import telebot
-import telebot_config
-
 import numpy as np
+import sys
 import matplotlib.pyplot as plt
 from   matplotlib import dates
+from datetime import datetime
 
+import telebot
+import telebot_config
 from   supervisor import *
 
 
@@ -17,7 +17,7 @@ from   supervisor import *
 class Grimm(Supervisor):
     def __init__(self):
         super().__init__("grimm")
-        path_to_figures = ".\\figures\\"
+        #path_to_figures = ".\\figures\\"
         self.alarm_time = 60
 
 
@@ -227,9 +227,9 @@ if __name__ == "__main__":
     try:
         grimm = Grimm()
         if grimm.check_lastfile():
-            exit("Errors with last file")
+            sys.exit("Errors with last file")
         if grimm.check_last_record():
-            exit("Errors in file format or in last record")
+            sys.exit("Errors in file format or in last record")
         grimm.read_errors_and_wars()
         plot_figure(grimm.data, period='day')
     except Exception as error:

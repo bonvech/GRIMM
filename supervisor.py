@@ -80,7 +80,7 @@ class Supervisor:
         if not self.test_mode:
             try:
                 bot = telebot.TeleBot(self.telebot_config_token, parse_mode=None)
-                bot.send_message(self.telebot_config_channel, text)
+                bot.send_message(self.telebot_config_channel, text, reply_to_message_id=telebot_config.topic)
                 self.print_message(text)
             except Exception as err:
                 ##  напечатать строку ошибки
